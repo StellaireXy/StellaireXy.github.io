@@ -3,7 +3,7 @@
     <head>
         <script src="https://s3.amazonaws.com/stitch-sdks/js/library/v3/stable/stitch.min.js"></script>
         <script>
-            const clientPromise = stitch.StitchClientFactory.create('blog_comments-dusdh');
+            const clientPromise = stitch.StitchClientFactory.create('blog_comments-lgjch');
 
             let client;
             let db;
@@ -30,7 +30,13 @@
                 clientPromise.then(stitchClient => {
                     client = stitchClient;
                     db = client.service('mongodb', 'mongodb-atlas').db('blog');
-                    return client.login().then(displayComments)
+                    var password = prompt("Password?");
+                    if (password == 'lapin' || password == 'tigre') {
+                        return client.login().then(displayComments)
+                    }
+                    else {
+                        alert("Wrong password!");
+                    }
                 });
             }
 
