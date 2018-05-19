@@ -31,9 +31,25 @@ function displayCommentsOnLoad() {
 
 function displayComments() {
     db.collection('comments').find({}).limit(1000).execute().then(docs => {
-        var html = docs.map(c => "<div><font color='#0099FF' size='1'>" + c.time + '</font><br>' + c.comment + "</div>").join("");
+        var html = "";
+        docs.map(c => {
+            if (c.comment.substring(0,1) == 'X') {
+                html += "<div><font color='#4B0082' size='1'>" + c.time +
+                '</font><br><kbd style="background-color:#E6E6FA; color:#000000">' + c.comment + "</kbd></div>";
+            }
+            else {
+                html += "<div align='right'><font color='#0099FF' size='1'>" + c.time +
+                '</font><br><kbd style="background-color:#B0C4DE; color:#000000">' + c.comment + "</kbd></div>";
+            }
+        });
+        
         document.getElementById("comments").innerHTML = html;
     });
+
+    /* db.collection('comments').find({}).limit(1000).execute().then(docs => {
+        var html = docs.map(c => "<div><font color='#0099FF' size='1'>" + c.time + '</font><br>' + c.comment + "</div>").join("");
+        document.getElementById("comments").innerHTML = html;
+    }); */
 }
 
 function addComment() {
